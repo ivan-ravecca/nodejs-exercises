@@ -1,0 +1,27 @@
+<!Doctype html>
+<html>
+	<head>
+		<title>Node Express Middleware samples</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	</head>
+	<body>
+
+  <script type="text/javascript">
+  (function ($){
+  	$(document).ready(function () {
+  		console.log('Ready');
+
+$.get( '/blocks', function( data ) {
+  alert( "Load was performed." );
+  $('body').append(data);
+});
+
+$.get( '/blocks?limit=1', function( data ) {
+  alert( "Load was performed." );
+  $('body').append(data);
+});
+  	});
+  })(jQuery);
+  </script>
+	</body>
+</html>

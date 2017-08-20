@@ -1,0 +1,56 @@
+Node JS
+Conceptos
+	* Bloqueante/no bloqueante
+	* Event programming
+	* es single line threading
+* Usa V8 JS Runtime (nodejs NO WRAPEA el V8)
+* Cosas que podemos hacer con node
+	Podemos armar websockets servers (chat el clásico ejemplo)
+	Fast File Upload Client
+	Ad Server (publicidad)
+	Real time data apps ()
+
+Ejemplos de código bloqueante vs no bloqueante
+	Bloqueante
+		(1) Leer archivo del sistema
+		(2) imprimir contenido
+		(3) Hacer algo más
+	No bloqueante
+		(1) Leer archivo del sistema
+			(3) Cuando este pronto, imprimir contenido
+		(2) Hacer algo más
+	EN CODIGO
+	var contents = fs.readFileSync('file.txt');
+	console.log(contents);
+	console.log('Another stuff');
+	=============== VS ===============
+	fs.readFile('file.txt', functino (errors, contents) {
+		console.log(contents);
+	});
+	console.log('Another stuff');
+Event programming
+	* Node se basa en los eventos-->
+		a) Existe un bucle donde chequea por eventos (http request por ejemplo)
+		b) Existe un event queue (porque quizas un evento genera otro evento/conexión)
+	* net.Server (que es una herencia de EventEmmiter) es el que nos permite manejar el request event; en cambio fs.readStream (heredando de EvenEmitter) es el que nos permite manejar la lectura de datos (por ejemplo leyendo un archivo)
+
+Streams (Streams2 API)
+	* Son como canales donde los datos pueden viajar
+	Un ejemplo sencillo, las variables request (redeable stream), response (writable stream) cuando creamos el server o atendemos un evento
+	* ReadableStream (que hereda de EventEmitter) emite eventos: readable y end
+
+Modulos
+	Por ejemplo el http, fs, etc; 
+Express
+	Middleware 
+		* Cuando lo usamos: cuando queremos hacer validaciones, autenticaciones, data parsing
+		* Son no async y se ejecutan según están en el stack
+SocketIO
+	----
+Persisting data (DBs, con drivers no bloqueantes -> podes mandar 2 queries y los procesos seguiran haciendo otra cosa mientras esperan a que se terminen las consultas)
+		MongoDB
+		CouchDB
+		PostgreSQL
+		Memcached
+		Riak
+		Redis (redis.io)

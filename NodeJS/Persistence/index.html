@@ -1,0 +1,23 @@
+<html>
+	<body>
+	<button id="send">Ping</button>
+	<script src="/socket.io/socket.io.js"></script>
+
+	<script type="text/javascript">
+		var socket = io.connect('http://localhost:8080');
+
+		socket.on('messages', function (data) {
+			console.log(data);
+		});
+
+		var nick = prompt('Who\'s your daddy?');
+		socket.emit('join', nick);
+
+		
+		document.getElementById('send').addEventListener('click', function () {
+			console.log('PIONFG');
+			socket.emit('messages', 'Testing : ' + (new Date()).getTime());
+		});
+	</script>
+	</body>
+</html>

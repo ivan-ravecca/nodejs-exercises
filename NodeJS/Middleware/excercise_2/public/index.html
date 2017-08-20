@@ -1,0 +1,73 @@
+<!Doctype html>
+<html>
+	<head>
+		<title>Node Express Middleware samples</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	</head>
+	<body>
+
+	<form >
+		<label for="name">Name</label>
+		<input type="text" name="name" id="name" placeholder="Some weird name" />
+
+		<label for="description">Description</label>
+		<input type="text" name="Description" id="description" placeholder="Some weird Description" />
+
+		<input type="submit" value="Send">
+	</form>
+
+	<script type="text/javascript">
+	function appendToList(){
+		var list = [];
+		$.get( '/blocks', function( blocks ) {
+			blocks.forEach(function(block){
+				var content = '<a href="/blocks/' +block + '">' + block + '</a>';
+				content += '<a href="#" class="del" data-block="' + block + '">DEL</a>';
+				list.push($('<li>', {html: content}));
+			});
+			var ul = $('<ul>');
+			ul.append(list);
+			$('body').append(ul);
+			polulate();
+		});
+	}
+
+	function polulate() {
+		$('.del').on('click', function (event) {
+				event.preventDefault();
+				var target = $(event.currentTarget);
+				console.info(target.data('block'));
+				$.ajax({
+					type: 'DELETE',
+					url: '/blocks/' + target.data('block'),
+				}).done(function(response) {
+					target.parents('li').remove();
+				});
+			});
+	}
+
+	(function ($){
+		$(document).ready(function () {
+			console.log('Ready');
+			appendToList();
+			$('form').on('submit', function (event) {
+				event.preventDefault();
+				var form = $(this);
+				var data = form.serialize();
+
+				$.ajax({
+					type: 'POST',
+					url: '/blocks',
+					data: data
+				}).done(function(response) {
+
+				});
+
+			});
+
+			
+		});
+	})(jQuery);
+	</script>
+	</body>
+</html>
